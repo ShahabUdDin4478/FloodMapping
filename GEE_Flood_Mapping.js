@@ -1,17 +1,24 @@
 var geometry = 
     /* color: #d63000 */
     /* shown: false */
-    /* displayProperties: [
-      {
-        "type": "rectangle"
-      }
-    ] */
     ee.Geometry.Polygon(
-        [[[71.79221858691403, 34.10552822679662],
-          [71.79221858691403, 33.525918217307165],
-          [72.52830257128903, 33.525918217307165],
-          [72.52830257128903, 34.10552822679662]]], null, false);
-          
+        [[[68.0649661016214, 26.829011058525175],
+          [68.9438723516214, 26.721118731982862],
+          [69.9656008672464, 27.55214989843267],
+          [70.20508087856305, 27.917760543859806],
+          [71.2839602422464, 28.280233699868262],
+          [72.13513157770687, 29.48275689193331],
+          [74.0360354375589, 30.803229416162285],
+          [74.7721194219339, 32.43564926987367],
+          [73.36222331674313, 33.16237289089867],
+          [70.5149172734964, 33.20655636742937],
+          [70.6137942266214, 31.835602451491688],
+          [70.3171633672464, 30.6943432889712],
+          [69.9656008672464, 29.449901939462997],
+          [69.3614934892577, 28.68589437713793],
+          [68.6144231767577, 28.30934300415914],
+          [67.2905706376952, 28.207734739214416],
+          [66.9554876298827, 27.025004989884557]]]);         
           
 
 var before_start= '2019-03-01';
@@ -33,6 +40,22 @@ var difference_threshold = 1.25; /*threshodl to be applied on the difference ima
                            - before flood). It has been chosen by trial and error. In case your
                            flood extent result shows many false-positive or negative signals, 
                            consider changing it! */
+//var relative_orbit = 79; 
+                          /*if you know the relative orbit for your study area, you can filter
+                           you image collection by it here, to avoid errors caused by comparing
+                           different relative orbits.*/
+
+
+/********************************************************************************************
+  ---->>> DO NOT EDIT THE SCRIPT PAST THIS POINT! (unless you know what you are doing) <<<---
+  ------------------>>> now hit the'RUN' at the top of the script! <<<-----------------------
+  -----> The final flood product will be ready for download on the right (under tasks) <-----
+
+  ******************************************************************************************/
+
+//---------------------------------- Translating User Inputs ------------------------------//
+
+//------------------------------- DATA SELECTION & PREPROCESSING --------------------------//
 
 // rename selected geometry feature 
 var aoi = ee.FeatureCollection(geometry);
@@ -256,11 +279,11 @@ var urban_area_ha = urban_stats
 
 // Before and after flood SAR mosaic
 Map.centerObject(aoi,8);
-Map.addLayer(before_filtered, {min:-25,max:0}, 'Before Flood',0);
-Map.addLayer(after_filtered, {min:-25,max:0}, 'After Flood',1);
+Map.addLayer(before_filtered, {min:-25,max:0}, 'Before Flood');
+Map.addLayer(after_filtered, {min:-25,max:0}, 'After Flood');
 
 // Difference layer
-Map.addLayer(difference,{min:0,max:2},"Difference Layer",0);
+Map.addLayer(difference,{min:0,max:2},"Difference Layer");
 
 // Flooded areas
 Map.addLayer(flooded,{palette:"0000FF"},'Flooded areas');
@@ -271,7 +294,7 @@ var populationCountVis = {
   max: 200.0,
   palette: ['060606','337663','337663','ffffff'],
 };
-Map.addLayer(population_count, populationCountVis, 'Population Density',0);
+Map.addLayer(population_count, populationCountVis, 'Population Density');
 
 // Exposed Population
 var populationExposedVis = {
@@ -291,7 +314,7 @@ var LCVis = {
     '69fff8', 'f9ffa4', '1c0dff'
   ],
 };
-Map.addLayer(LC, LCVis, 'Land Cover',0);
+Map.addLayer(LC, LCVis, 'Land Cover');
 
 // Cropland
 var croplandVis = {
@@ -299,7 +322,7 @@ var croplandVis = {
   max: 14.0,
   palette: ['30b21c'],
 };
-Map.addLayer(cropland, croplandVis, 'Cropland',0)
+Map.addLayer(cropland, croplandVis, 'Cropland')
 
 // Affected cropland
 Map.addLayer(cropland_affected, croplandVis, 'Affected Cropland'); 
@@ -310,7 +333,7 @@ var urbanVis = {
   max: 13.0,
   palette: ['grey'],
 };
-Map.addLayer(urban, urbanVis, 'Urban',0)
+Map.addLayer(urban, urbanVis, 'Urban')
 
 // Affected urban
 Map.addLayer(urban_affected, urbanVis, 'Affected Urban'); 
