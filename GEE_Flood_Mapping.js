@@ -1,25 +1,17 @@
-var geometry = 
-    /* color: #d63000 */
-    /* shown: false */
-    ee.Geometry.Polygon(
-        [[[68.0649661016214, 26.829011058525175],
-          [68.9438723516214, 26.721118731982862],
-          [69.9656008672464, 27.55214989843267],
-          [70.20508087856305, 27.917760543859806],
-          [71.2839602422464, 28.280233699868262],
-          [72.13513157770687, 29.48275689193331],
-          [74.0360354375589, 30.803229416162285],
-          [74.7721194219339, 32.43564926987367],
-          [73.36222331674313, 33.16237289089867],
-          [70.5149172734964, 33.20655636742937],
-          [70.6137942266214, 31.835602451491688],
-          [70.3171633672464, 30.6943432889712],
-          [69.9656008672464, 29.449901939462997],
-          [69.3614934892577, 28.68589437713793],
-          [68.6144231767577, 28.30934300415914],
-          [67.2905706376952, 28.207734739214416],
-          [66.9554876298827, 27.025004989884557]]]);         
-          
+
+// Import country boundaries feature collection.
+var dataset = ee.FeatureCollection('USDOS/LSIB_SIMPLE/2017');
+
+// Apply filter where country name equals Uganda.
+var geometry = dataset.filter(ee.Filter.eq('country_na', 'Pakistan'));
+
+// Print new "Pakborder" object and explorer features and properties.
+// There should only be one feature representing Uganda.
+print(geometry);
+
+// Add Uganda outline to the Map as a layer.
+Map.centerObject(geometry, 6);
+Map.addLayer(geometry);
 
 var before_start= '2019-03-01';
 var before_end='2019-03-10';
